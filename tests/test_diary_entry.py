@@ -1,4 +1,14 @@
+import pytest
 from lib.diary_entry import *
+
+"""
+Given an empty string:
+Raises an error
+"""
+def test_empty_strings_error():
+    with pytest.raises(Exception) as e:
+        DiaryEntry("","")
+    assert str(e.value) == "Please enter a title and contents!"
 
 """
 Returns:
@@ -52,10 +62,5 @@ The next call after that should restart from the beginning.
 
 def test_reading_chunk():
     diary_entry = DiaryEntry("Title", "Some contents is exists")
-    result = diary_entry.reading_chunk(2, 2)
-    assert result == "Some contents is exists"
-
-def test_reading_chunk_called_again():
-    diary_entry = DiaryEntry("Title", "Some contents is exists one two three four")
-    result = diary_entry.reading_chunk(2, 2)
-    assert result == "one two three four"
+    assert diary_entry.reading_chunk(2, 1) == "Some contents"
+    assert diary_entry.reading_chunk(2, 1) == "is exists"
